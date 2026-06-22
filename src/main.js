@@ -92,7 +92,19 @@ function renderBlockBody(block) {
   }
 
   return (block.paragraphs || [])
-    .map((p) => `<p class="content-block__text">${p}</p>`)
+    .map((p) => {
+      if (block.variant === "quote-rainbow") {
+        return `
+          <blockquote class="content-block__quote">
+            <div class="content-block__quote-inner">
+              <p class="content-block__text content-block__quote-text">${p}</p>
+            </div>
+          </blockquote>
+        `;
+      }
+
+      return `<p class="content-block__text">${p}</p>`;
+    })
     .join("");
 }
 

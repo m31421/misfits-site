@@ -350,6 +350,32 @@ body {
   margin-bottom: 0;
 }
 
+.content-block__quote {
+  margin: 0;
+  padding: 2px;
+  background: conic-gradient(
+    from 0deg,
+    #e74c3c 0deg,
+    #f39c12 50deg,
+    #f1c40f 100deg,
+    #2ecc71 160deg,
+    #1abc9c 210deg,
+    #3498db 260deg,
+    #9b59b6 310deg,
+    #e74c3c 360deg
+  );
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.04);
+}
+
+.content-block__quote-inner {
+  background: #0a0a0a;
+  padding: 1.35rem 1.5rem;
+}
+
+.content-block__quote-text {
+  margin-bottom: 0;
+}
+
 .content-block__date {
   display: inline-block;
   margin-left: 0.5rem;

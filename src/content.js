@@ -66,6 +66,7 @@ export const sections = {
     blocks: [
       {
         heading: "ABOUT",
+        variant: "quote-rainbow",
         paragraphs: [aboutQuote],
       },
       {
@@ -78,6 +79,7 @@ export const sections = {
     blocks: [
       {
         heading: "ABOUT",
+        variant: "quote-rainbow",
         paragraphs: [aboutQuote],
       },
     ],
