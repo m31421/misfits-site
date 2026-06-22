@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Misfits SMP — a cozy Minecraft survival server for wonderfully weird players."
+    />
+    <title>Misfits SMP</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="src/styles.css" />
+  </head>
+  <body>
+    <div class="background" aria-hidden="true"></div>
+
+    <main class="page">
+      <div class="panel-stack" id="panel">
+        <div class="panel-shadow panel-shadow--back" aria-hidden="true"></div>
+        <div class="panel-shadow panel-shadow--mid" aria-hidden="true"></div>
+
+        <div class="panel">
+          <aside class="sidebar" id="sidebar" aria-label="Site navigation">
+            <div class="sidebar__header">
+              <button type="button" class="logo-card" id="logo-home" aria-label="Go to home page">
+                <img id="logo" class="logo-card__img" src="" alt="" width="120" height="120" />
+              </button>
+
+              <button
+                type="button"
+                class="nav-toggle"
+                id="nav-toggle"
+                aria-expanded="false"
+                aria-controls="nav-list"
+                aria-label="Open navigation menu"
+              >
+                <span class="nav-toggle__bar" aria-hidden="true"></span>
+                <span class="nav-toggle__bar" aria-hidden="true"></span>
+                <span class="nav-toggle__bar" aria-hidden="true"></span>
+              </button>
+            </div>
+
+            <nav aria-label="Sections">
+              <ul class="nav-list" id="nav-list"></ul>
+            </nav>
+          </aside>
+
+          <div class="content-shell">
+            <article
+              class="content-area content-area--visible"
+              id="content-area"
+              aria-live="polite"
+            ></article>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script type="module" src="src/main.js"></script>
+  </body>
+</html>
