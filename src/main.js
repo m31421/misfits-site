@@ -5,6 +5,8 @@ const contentArea = document.getElementById("content-area");
 const logoImg = document.getElementById("logo");
 const logoHome = document.getElementById("logo-home");
 const sidebar = document.getElementById("sidebar");
+const panelInner = document.getElementById("panel-inner");
+const navOverlay = document.getElementById("nav-overlay");
 const navToggle = document.getElementById("nav-toggle");
 
 let activeSection = siteConfig.homeSection || "home";
@@ -17,6 +19,7 @@ function init() {
   logoImg.alt = `${siteConfig.title} logo`;
 
   navToggle.addEventListener("click", () => setMenuOpen(!menuOpen));
+  navOverlay.addEventListener("click", () => setMenuOpen(false));
   logoHome.addEventListener("click", goHome);
 
   document.addEventListener("keydown", (event) => {
@@ -31,6 +34,9 @@ function init() {
 function setMenuOpen(open) {
   menuOpen = open;
   sidebar.classList.toggle("sidebar--menu-open", open);
+  panelInner.classList.toggle("panel--menu-open", open);
+  document.body.classList.toggle("menu-open", open);
+  navOverlay.setAttribute("aria-hidden", String(!open));
   navToggle.setAttribute("aria-expanded", String(open));
   navToggle.setAttribute(
     "aria-label",
