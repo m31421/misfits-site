@@ -17,6 +17,22 @@ export const navItems = [
 const aboutQuote =
   "\"We're all a little weird. And when we find someone whose weirdness is compatible with ours, we join up with them and fall into mutually satisfying weirdness and call it MISFITS SMP.\" — Dr. Seuss";
 
+// ── Google Sheets announcements ──────────────────────────────────────────────
+// 1. In your Google Sheet: File → Share → Publish to web
+//    → choose "Comma-separated values (.csv)" → Publish
+// 2. Paste the published CSV URL below (replace YOUR_SHEET_ID).
+// 3. Sheet columns — row 1 is a header row (ignored). Each data row is one paragraph:
+//    A: Date display  (e.g. "Jun 22, 2026")
+//    B: Date ISO      (e.g. "2026-06-22")   ← used for <time datetime="">
+//    C: Paragraph     (one paragraph of the post body)
+//
+//    Rows sharing the same ISO date are grouped into a single post, in order.
+//    To add a new post: add rows with the new date. Changes appear on next page load.
+
+const SHEET_CSV_URL =
+  "https://docs.google.com/spreadsheets/d/e/2PACX-1vTuDuQVjrWmX2oV1JMd7wsDuy-vIPJhI3PJrYOCifvnsBL1Bmf1Lzjx3KznhLSay_c1TQzENDcGBdNC/pub?output=csv";
+
+// Fallback shown when the sheet can't be reached (or hasn't been configured yet)
 export const announcementPosts = [
   {
     paragraphs: [
@@ -37,6 +53,96 @@ export const announcementPosts = [
     datetime: "2026-06-22",
   },
 ];
+
+function parseSheetCSV(text) {
+  // Split into raw lines but respect quoted newlines (multi-line cells)
+  // Google Sheets wraps multi-line cell values in "..." with \n inside
+  const rows = [];
+  let current = "";
+  let inQuotes = false;
+  for (let i = 0; i < text.length; i++) {
+    const ch = text[i];
+    if (ch === '"') {
+      if (inQuotes && text[i + 1] === '"') { current += '"'; i++; }
+      else { inQuotes = !inQuotes; current += ch; }
+    } else if (ch === "\n" && !inQuotes) {
+      rows.push(current);
+      current = "";
+    } else {
+      current += ch;
+    }
+  }
+  if (current) rows.push(current);
+
+  // Parse each row into columns
+  function splitRow(line) {
+    const cols = [];
+    let field = "";
+    let inQ = false;
+    for (let i = 0; i < line.length; i++) {
+      const ch = line[i];
+      if (ch === '"') {
+        if (inQ && line[i + 1] === '"') { field += '"'; i++; }
+        else { inQ = !inQ; }
+      } else if (ch === "," && !inQ) {
+        cols.push(field);
+        field = "";
+      } else {
+        field += ch;
+      }
+    }
+    cols.push(field);
+    return cols;
+  }
+
+  const dataRows = rows.slice(1); // skip header row
+  const posts = [];
+
+  for (const row of dataRows) {
+    const cols = splitRow(row);
+    const datetime  = (cols[0] || "").trim();           // A: ISO date e.g. 2026-06-22
+    const title     = (cols[1] || "").trim();           // B: title
+    const body      = (cols[2] || "").trim();           // C: full body (may have \n inside)
+    const published = (cols[3] || "").trim().toUpperCase(); // D: TRUE/FALSE
+
+    if (published !== "TRUE") continue;
+    if (!title && !body) continue;
+
+    // Format date for display e.g. "Jun 22, 2026"
+    let dateDisplay = datetime;
+    if (datetime) {
+      const d = new Date(datetime + "T12:00:00");
+      if (!isNaN(d)) {
+        dateDisplay = d.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+      }
+    }
+
+    // Split multi-paragraph body on newlines, filter blanks
+    const paragraphs = body
+      .split(/\n+/)
+      .map((p) => p.trim())
+      .filter(Boolean);
+
+    posts.push({ date: dateDisplay, datetime, title, paragraphs });
+  }
+
+  return posts.reverse(); // newest first
+}
+
+export async function fetchAnnouncements() {
+  if (SHEET_CSV_URL.includes("YOUR_SHEET_ID") || !SHEET_CSV_URL) {
+    return announcementPosts; // not configured yet — use fallback
+  }
+  try {
+    const res = await fetch(SHEET_CSV_URL);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const posts = parseSheetCSV(await res.text());
+    return posts.length ? posts : announcementPosts;
+  } catch (err) {
+    console.warn("[Misfits] Could not load announcements from sheet:", err);
+    return announcementPosts;
+  }
+}
 
 export const sections = {
   home: {

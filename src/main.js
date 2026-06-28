@@ -1,4 +1,4 @@
-import { siteConfig, navItems, sections } from "./content.js";
+import { siteConfig, navItems, sections, fetchAnnouncements } from "./content.js";
 
 const navList = document.getElementById("nav-list");
 const contentArea = document.getElementById("content-area");
@@ -95,10 +95,14 @@ function renderNav() {
 
 function renderPost(post) {
   const dateHtml = `<time class="content-block__date" datetime="${post.datetime}">${post.date}</time>`;
+  const titleHtml = post.title
+    ? `<p class="content-block__post-title">${post.title}</p>`
+    : "";
 
   if (post.paragraphs) {
     return `
       <div class="content-block__text content-block__post">
+        ${titleHtml}
         ${post.paragraphs.map((p) => `<p class="content-block__post-paragraph">${p}</p>`).join("")}
         ${dateHtml}
       </div>
@@ -107,6 +111,7 @@ function renderPost(post) {
 
   return `
     <p class="content-block__text content-block__post">
+      ${titleHtml}
       ${post.text}
       ${dateHtml}
     </p>
@@ -151,12 +156,24 @@ function buildSectionHtml(section) {
     .join("");
 }
 
-function renderContent(sectionId, skipTransition = false) {
+async function renderContent(sectionId, skipTransition = false) {
   const section = sections[sectionId];
   if (!section) return;
 
+  // For announcements, fetch live posts from the sheet and patch the block
+  let resolvedSection = section;
+  if (sectionId === "announcements" || sectionId === "home") {
+    const livePosts = await fetchAnnouncements();
+    resolvedSection = {
+      ...section,
+      blocks: section.blocks.map((block) =>
+        block.posts !== undefined ? { ...block, posts: livePosts } : block
+      ),
+    };
+  }
+
   if (skipTransition) {
-    contentArea.innerHTML = buildSectionHtml(section);
+    contentArea.innerHTML = buildSectionHtml(resolvedSection);
     contentArea.classList.add("content-area--visible");
     contentArea.classList.remove("content-area--hidden");
     return;
@@ -166,7 +183,7 @@ function renderContent(sectionId, skipTransition = false) {
   contentArea.classList.add("content-area--hidden");
 
   window.setTimeout(() => {
-    contentArea.innerHTML = buildSectionHtml(section);
+    contentArea.innerHTML = buildSectionHtml(resolvedSection);
     contentArea.classList.remove("content-area--hidden");
     contentArea.classList.add("content-area--visible");
   }, 120);
