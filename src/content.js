@@ -11,7 +11,6 @@ export const navItems = [
   { id: "announcements", label: "ANNOUNCEMENTS", icon: "images/misc.svg", ariaLabel: "Server announcements" },
   { id: "mods", label: "MODS", icon: "images/movement.svg", ariaLabel: "Server mods" },
   { id: "rules", label: "RULES", icon: "images/settings.svg", ariaLabel: "Server rules" },
-  { id: "discord", label: "DISCORD", icon: "images/player.svg", ariaLabel: "Join our Discord" },
 ];
 
 const aboutQuote =
@@ -247,32 +246,6 @@ export const sections = {
           "Pranks are welcome but like PVP, know your audience and be willing to help clean up a prank if it needs it. Lets have fun!",
           "Farms and traders are only for public use if the person who made it lets people use it (but dont forget, we will be starting with a shopping district this year). The only exception to this is if/when someone builds an enderman XP farm.",
           "Only TNT duping is allowed. No sand, concrete, or any other item.",
-        ],
-      },
-    ],
-  },
-  discord: {
-    blocks: [
-      {
-        heading: "DISCORD",
-        paragraphs: [
-          "The server heartbeat lives on Discord — whitelist apps, voice hangouts, build showcases, and patch notes all start here.",
-        ],
-      },
-      {
-        heading: "JOIN US",
-        paragraphs: [
-          "Invite link: discord.gg/misfitssmp (placeholder — swap this in content.js when your real invite is ready).",
-          "After you join, read #welcome and react to get the Member role. Post your Minecraft username in #whitelist to apply.",
-        ],
-      },
-      {
-        heading: "CHANNELS",
-        paragraphs: [
-          "#announcements — seed news, restarts, and event schedules.",
-          "#general — memes, lore, and late-night mining coordination.",
-          "#builds — screenshots, shader flexing, and group build sign-ups.",
-          "#support — modpack help, bug reports, and \"where is my horse\" emergencies.",
         ],
       },
     ],
