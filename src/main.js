@@ -93,17 +93,32 @@ function renderNav() {
   });
 }
 
+function md(text) {
+  return text
+    .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
+    .replace(/\*(.+?)\*/g, "<em>$1</em>");
+}
+
+function formatParagraph(text) {
+  const dashIndex = text.indexOf(" — ");
+  if (dashIndex === -1) return md(text);
+
+  const label = text.slice(0, dashIndex);
+  const rest = text.slice(dashIndex);
+  return `<strong>${md(label)}</strong>${md(rest)}`;
+}
+
 function renderPost(post) {
   const dateHtml = `<time class="content-block__date" datetime="${post.datetime}">${post.date}</time>`;
   const titleHtml = post.title
-    ? `<p class="content-block__post-title">${post.title}</p>`
+    ? `<p class="content-block__post-title">${md(post.title)}</p>`
     : "";
 
   if (post.paragraphs) {
     return `
       <div class="content-block__text content-block__post">
         ${titleHtml}
-        ${post.paragraphs.map((p) => `<p class="content-block__post-paragraph">${p}</p>`).join("")}
+        ${post.paragraphs.map((p) => `<p class="content-block__post-paragraph">${md(p)}</p>`).join("")}
         ${dateHtml}
       </div>
     `;
@@ -112,7 +127,7 @@ function renderPost(post) {
   return `
     <p class="content-block__text content-block__post">
       ${titleHtml}
-      ${post.text}
+      ${md(post.text)}
       ${dateHtml}
     </p>
   `;
@@ -135,7 +150,7 @@ function renderBlockBody(block) {
         `;
       }
 
-      return `<p class="content-block__text">${p}</p>`;
+      return `<p class="content-block__text">${formatParagraph(p)}</p>`;
     })
     .join("");
 }

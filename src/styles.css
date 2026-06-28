@@ -2,8 +2,8 @@
 :root {
   --color-bg-content: #0a0a0a;
   --color-bg-sidebar: #141414;
-  --pattern-overlay-sidebar: 0.96;
-  --pattern-overlay-content: 0.98;
+  --pattern-overlay-sidebar: 0.97;
+  --pattern-overlay-content: 0.997;
   --color-text: #c8c8c8;
   --color-text-muted: #9a9a9a;
   --color-heading: #f0f0f0;
@@ -196,6 +196,7 @@ body {
 
 .nav-item {
   width: 100%;
+  color: #303030;
 }
 
 .nav-btn {
@@ -314,8 +315,12 @@ body {
     transform 0.25s ease;
 }
 
+.content-block {
+  padding-bottom: 32px;
+}
+
 .content-block + .content-block {
-  margin-top: 2rem;
+  margin-top: 3rem;
 }
 
 .content-block__heading-row {
@@ -323,6 +328,7 @@ body {
   align-items: center;
   gap: 1rem;
   margin-bottom: 1rem;
+  padding-bottom: 16px;
 }
 
 .content-block__heading {
@@ -344,10 +350,15 @@ body {
 
 .content-block__text {
   font-family: var(--font-body);
-  font-size: 0.95rem;
+  font-size: 16px;
   line-height: 1.65;
   color: #e0e0e0;
   margin-bottom: 0.85rem;
+}
+
+div.content-block__text {
+  padding-top: 16px;
+  margin-top: 0;
 }
 
 .content-block__text:last-child {
@@ -391,7 +402,7 @@ body {
 }
 
 .content-block__post {
-  font-size: 1.05rem;
+  font-size: 16px;
   line-height: 1.7;
 }
 
@@ -445,11 +456,11 @@ body {
   }
 
   .content-block__text {
-    font-size: 0.92rem;
+    font-size: 16px;
   }
 
   .content-block__post {
-    font-size: 1rem;
+    font-size: 16px;
   }
 
   .nav-btn {
@@ -711,11 +722,11 @@ body {
   }
 
   .content-block__text {
-    font-size: 0.875rem;
+    font-size: 16px;
     line-height: 1.6;
   }
 
   .content-block__post {
-    font-size: 0.95rem;
+    font-size: 16px;
   }
 }
