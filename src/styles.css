@@ -9,8 +9,8 @@
   --color-heading: #f0f0f0;
   --color-border: #2a2a2a;
   --color-border-light: #3a3a3a;
-  --color-nav-inactive: #5a5a5a;
-  --color-nav-inactive-hover: #6e6e6e;
+  --color-nav-inactive: #303030;
+  --color-nav-inactive-hover: #3a3a3a;
   --color-nav-active: #3d9a2e;
   --color-nav-active-hover: #48b838;
   --color-nav-active-border: #2d7a22;
@@ -425,7 +425,7 @@ body {
 .content-block__post:not(:last-child) {
   padding-bottom: 1rem;
   margin-bottom: 1rem;
-  border-bottom: 2px solid #181818;
+  border-bottom: 2px solid #2a2a2a;
 }
 
 /* ── Tablet ── */
