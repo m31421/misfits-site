@@ -284,7 +284,7 @@ body {
 .content-area {
   height: 100%;
   overflow-y: auto;
-  padding: 2rem 2.25rem;
+  padding: 1rem 2.25rem;
   scrollbar-width: thin;
   scrollbar-color: #333 #0a0a0a;
 }
@@ -316,7 +316,7 @@ body {
 }
 
 .content-block {
-  padding-bottom: 32px;
+  padding-bottom: 0px;
 }
 
 .content-block + .content-block {
@@ -327,7 +327,7 @@ body {
   display: flex;
   align-items: center;
   gap: 1rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0;
   padding-bottom: 16px;
 }
 
@@ -448,7 +448,7 @@ div.content-block__text {
   }
 
   .content-area {
-    padding: 1.75rem 1.5rem;
+    padding: 1rem 1.5rem;
   }
 
   .content-block__heading {
